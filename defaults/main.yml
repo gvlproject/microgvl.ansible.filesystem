@@ -12,5 +12,9 @@ gvl_galaxy_brand: "mGVL {{ gvl_verison }}"
 gvl_fs_archive_name: "microgvl-fs-{{ gvl_version }}.tar.gz"
 
 cmg_extra_files:
+  - src: roles/gvl.ansible.filesystem/files/galaxy-app
+    dest: "{{ galaxyFS_base_dir }}"
+  - src: roles/gvl.ansible.filesystem/files/galaxy-var/
+    dest: "{{ galaxyFS_base_dir }}/var/"
   - src: roles/microgvl.ansible.filesystem/files/galaxy-app
     dest: "{{ galaxyFS_base_dir }}"
