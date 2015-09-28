@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Bash script to copy the modules files from the other_tools directory into /usr/share/modules/modulesfiles..
+#
+# Simon Gladman - 2015 - VLSCI
+# Part of the Microbial GVL project.
+
+if [ -d "{{ galaxyFS_base_dir }}/other_tools/modulesfiles" ]
+then
+  sudo cp -r {{ galaxyFS_base_dir }}/other_tools/modulesfiles/* /usr/share/modules/modulefiles
+else
+  printf "No modules files to copy across."
+fi
