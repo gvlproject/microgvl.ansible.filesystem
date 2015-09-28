@@ -6,7 +6,7 @@ galaxy_tools_tool_list_files: [ "roles/gvl.ansible.filesystem/files/scripts/shed
 
 gvl_fs_name: "mGVL filesystem"
 gvl_fs_flavour: "Microbial GVL"
-gvl_version: "0.8.3-4"
+gvl_version: "0.9-4"
 gvl_galaxy_brand: "mGVL {{ gvl_verison }}"
 
 gvl_fs_archive_name: "microgvl-fs-{{ gvl_version }}.tar.gz"
