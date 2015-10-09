@@ -6,10 +6,17 @@ galaxy_tools_tool_list_files: [ "roles/gvl.ansible.filesystem/files/scripts/shed
 
 gvl_fs_name: "mGVL filesystem"
 gvl_fs_flavour: "Microbial GVL"
-gvl_version: "0.9-4"
-gvl_galaxy_brand: "mGVL {{ gvl_verison }}"
-
+gvl_fs_version: "0.9-4"
+gvl_galaxy_brand: "mGVL {{ gvl_fs_version }}"
+cloudman_bucket_name: cloudman-os
 gvl_fs_archive_name: "microgvl-fs-{{ gvl_version }}.tar.gz"
+
+gvl_fs_archive_path: /mnt/galaxy_archive
+OS_AUTH_URL: https://keystone.rc.nectar.org.au:5000/v2.0/
+OS_TENANT_ID: 377
+OS_TENANT_NAME: GenomicsVL
+OS_USERNAME: simon.gladman@unimelb.edu.au
+OS_PASSWORD: YmIxZjJmNGYzMzNkZjFh
 
 cmg_extra_files:
   - src: roles/gvl.ansible.filesystem/files/galaxy-app

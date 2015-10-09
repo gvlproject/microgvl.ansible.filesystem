@@ -189,6 +189,18 @@
   sudo: yes
   sudo_user: root
 
+#Use brew to install Torsten Seeman's nullarbor
+- name: Tapping brew science, cbl and homebrew-bioinformatics-linux
+  homebrew_tap: name=homebrew/science,chapmanb/cbl,tseemann/homebrew-bioinformatics-linux state=present
+  sudo: yes
+  sudo_user: root
+
+- name: Install Nullarbor
+  homebrew: name=nullarbor state=present update_homebrew=yes
+  sudo: yes
+  sudo_user: root
+
+
   #Make the .sh script that will copy the modules files to the correct location.
 - name: Make script to copy the modules files to the correct place.
   template: src=copy_modules.j2 dest="{{ galaxyFS_base_dir }}/gvl/poststart.d/copy_modules" mode=0755 owner="ubuntu"
