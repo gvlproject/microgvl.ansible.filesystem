@@ -1,0 +1,16 @@
+# micro_gvl_cmd_apps.yml
+
+# This script will install all of the command line tools for the mGVL including Mauve, IGV, Artemis and the nullarbor suite of programs. (Nullarbor, Prokka, Snippy, etc.)
+
+# Start by making sure that the directory /mnt/gvl/apps exists..
+
+- name: Check gvl_apps directory exists (default: /mnt/gvl/apps)
+  file: {{ gvl_app_path }} state=directory owner=ubuntu group=ubuntu
+  sudo: yes
+  sudo_user: ubuntu
+
+#Include statements for the other tools. Starting with linux brew
+- include: install_linuxbrew.yml
+
+#Install nullarbor and associated packages via brew
+- include: install_nullarbor.yml

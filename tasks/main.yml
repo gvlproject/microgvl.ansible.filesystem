@@ -1,4 +1,4 @@
-- include: other_tools.yml
+- include: micro_gvl_cmd_apps.yml
   sudo: yes
   sudo_user: ubuntu
 - include: ../../gvl.ansible.filesystem/tasks/create_archive.yml
