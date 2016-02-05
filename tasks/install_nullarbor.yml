@@ -5,16 +5,16 @@
 
 #install some extra perl modules for roary and Torsten's stuff
 - name: Install required perl modules
-cpanm: name="{{ item }}" notest=yes
-with_items:
-  - List::Util
-  - Moo
-  - Spreadsheet::Read
-  - YAML::Tiny
-  - Bio::Roary
-  - https://github.com/chapmanb/vcftools-cpan/archive/v0.953.tar.gz
-sudo: yes
-sudo_user: root
+  cpanm: name="{{ item }}" notest=yes
+  with_items:
+    - List::Util
+    - Moo
+    - Spreadsheet::Read
+    - YAML::Tiny
+    - Bio::Roary
+    - https://github.com/chapmanb/vcftools-cpan/archive/v0.953.tar.gz
+  sudo: yes
+  sudo_user: root
 
 #Install libpng manually.
 - name: brew install libpng
