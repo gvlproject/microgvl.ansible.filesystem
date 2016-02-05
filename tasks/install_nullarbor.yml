@@ -4,78 +4,79 @@
 
 environment: {{ linuxbrew_env }}
 
-#install some extra perl modules for roary and Torsten's stuff
-- name: Install required perl modules
-  cpanm: name={{ item }} notest=yes
-  with_items:
-    - List::Util
-    - Moo
-    - Spreadsheet::Read
-    - YAML::Tiny
-    - Bio::Roary
-    - https://github.com/chapmanb/vcftools-cpan/archive/v0.953.tar.gz
-  sudo: yes
-  sudo_user: root
-
-  #Install libpng manually.
-  - name: brew install libpng
-    homebrew: name=libpng
-
-  #Install some other modules manually
-  - name: Install fontconfig separately as it fails if installed with ImageMagick..
-    homebrew: name=fontconfig state=present
-
-  - name: Install imagemagick with librsvg
-    homebrew: name=imagemagick install_options=with-librsvg
-
-  - name: install blast+ with compile options --without-static an --without-check
-    homebrew: name=blast install_options=without-static,without-check
-
-  - name: install skewer
-    homebrew: name=skewer state=present
-
-  #Install Roary dependencies
-  - name: Install Roary dependencies
-    homebrew: name={{ item }}
+tasks:
+  #install some extra perl modules for roary and Torsten's stuff
+  - name: Install required perl modules
+    cpanm: name={{ item }} notest=yes
     with_items:
-      - bedtools
-      - cd-hit
-      - mcl
-      - parallel
-      - prank
-      - mafft
-      - exonerate
-
-  #Finally, install nullarbor.
-  - name: Install nullarbor
-    homebrew: name=nullarbor state=present
-
-  #Now we need to fix it!
-  - name: Make the krakendb dir
-    file: dest={{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb owner=ubuntu state=directory
-    sudo: yes
-    sudo_user: ubuntu
-
-  - name: Install the kraken database
-    get_url: url="https://swift.rc.nectar.org.au:8888/v1/AUTH_377/public/minikraken.tgz" dest="/mnt/transient_nfs/minikraken.tgz" mode=0755
-    sudo: yes
-    sudo_user: ubuntu
-
-  - name: Untar the kraken database
-    unarchive: src="/mnt/transient_nfs/minikraken.tgz" dest="{{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb" copy=no
-
-  - name: Move the kraken db
-    shell: "mv {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/minikraken*/* {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/"
-    sudo: yes
-    sudo_user: ubuntu
-
-  - name: Update the prokka version
-    command: brew reinstall prokka --HEAD
-
-  - name: update the perl List::Util version
-    command: cpanm --upgrade List::Util
+      - List::Util
+      - Moo
+      - Spreadsheet::Read
+      - YAML::Tiny
+      - Bio::Roary
+      - https://github.com/chapmanb/vcftools-cpan/archive/v0.953.tar.gz
     sudo: yes
     sudo_user: root
 
-  - name: Reinstall nullarbor to get the head version.
-    command: brew reinstall nullarbor --HEAD
+    #Install libpng manually.
+    - name: brew install libpng
+      homebrew: name=libpng
+
+    #Install some other modules manually
+    - name: Install fontconfig separately as it fails if installed with ImageMagick..
+      homebrew: name=fontconfig state=present
+
+    - name: Install imagemagick with librsvg
+      homebrew: name=imagemagick install_options=with-librsvg
+
+    - name: install blast+ with compile options --without-static an --without-check
+      homebrew: name=blast install_options=without-static,without-check
+
+    - name: install skewer
+      homebrew: name=skewer state=present
+
+    #Install Roary dependencies
+    - name: Install Roary dependencies
+      homebrew: name={{ item }}
+      with_items:
+        - bedtools
+        - cd-hit
+        - mcl
+        - parallel
+        - prank
+        - mafft
+        - exonerate
+
+    #Finally, install nullarbor.
+    - name: Install nullarbor
+      homebrew: name=nullarbor state=present
+
+    #Now we need to fix it!
+    - name: Make the krakendb dir
+      file: dest={{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb owner=ubuntu state=directory
+      sudo: yes
+      sudo_user: ubuntu
+
+    - name: Install the kraken database
+      get_url: url="https://swift.rc.nectar.org.au:8888/v1/AUTH_377/public/minikraken.tgz" dest="/mnt/transient_nfs/minikraken.tgz" mode=0755
+      sudo: yes
+      sudo_user: ubuntu
+
+    - name: Untar the kraken database
+      unarchive: src="/mnt/transient_nfs/minikraken.tgz" dest="{{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb" copy=no
+
+    - name: Move the kraken db
+      shell: "mv {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/minikraken*/* {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/"
+      sudo: yes
+      sudo_user: ubuntu
+
+    - name: Update the prokka version
+      command: brew reinstall prokka --HEAD
+
+    - name: update the perl List::Util version
+      command: cpanm --upgrade List::Util
+      sudo: yes
+      sudo_user: root
+
+    - name: Reinstall nullarbor to get the head version.
+      command: brew reinstall nullarbor --HEAD

@@ -7,8 +7,8 @@
   sudo: yes
   sudo_user: root
 
-  #create a temporary modulesfiles directory
-- name: Create temp modules files dir
+  #create a temporary modulesfiles directory more comment here
+- name: Create temp modules files dir and stuff
   file: dest="{{ galaxyFS_base_dir }}/other_tools/modulesfiles" owner=ubuntu group=ubuntu state=directory
   sudo: yes
   sudo_user: root
