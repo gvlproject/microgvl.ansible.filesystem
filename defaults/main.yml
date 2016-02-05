@@ -2,7 +2,7 @@
 # Vars over-ridden from the default gvl filesystem to suit the microbial filesystem.
 #
 
-galaxy_tools_tool_list_files: [ "roles/gvl.ansible.filesystem/files/scripts/shed_tool_list.yaml.gvl", "roles/microgvl.ansible.filesystem/files/scripts/shed_tool_list.yaml.mgvl" ]
+galaxy_tools_tool_list_files: "roles/microgvl.ansible.filesystem/files/scripts/shed_tool_list.yaml.mgvl"
 
 gvl_fs_name: "mGVL filesystem"
 gvl_fs_flavour: "Microbial GVL"
