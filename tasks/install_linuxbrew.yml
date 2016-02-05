@@ -2,69 +2,68 @@
 # Ansible script to install linuxbrew and associated requirements. It will put it into {{ gvl_app_path }} and use sensible temp dirs etc.
 # It also sets the pathing correctly for linuxbrew for anyuser that logs in via ssh or a login terminal.
 #
-tasks:
   # Install some extra required system packages
-  - name: Update the apt cache
-    apt: update_cache=yes
-    sudo: yes
-    sudo_user: root
+- name: Update the apt cache
+  apt: update_cache=yes
+  sudo: yes
+  sudo_user: root
 
-  - name: Install some more required system packages
-    apt: pkg={{ item }} state=latest
-    with_items:
-      - build-essential
-      - curl
-      - git
-      - m4
-      - ruby
-      - texinfo
-      - libbz2-dev
-      - libcurl4-openssl-dev
-      - libexpat-dev
-      - libncurses-dev
-      - zlib1g-dev
-      - cpanminus
-      - pandoc
-      - oracle-java8-installer
-    sudo: yes
-    sudo_user: root
+- name: Install some more required system packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - build-essential
+    - curl
+    - git
+    - m4
+    - ruby
+    - texinfo
+    - libbz2-dev
+    - libcurl4-openssl-dev
+    - libexpat-dev
+    - libncurses-dev
+    - zlib1g-dev
+    - cpanminus
+    - pandoc
+    - oracle-java8-installer
+  sudo: yes
+  sudo_user: root
 
-  - name: Create the homebrew_cache directory
-    file: dest="/mnt/transient_nfs/homebrew_temp" state=directory owner=ubuntu group=ubuntu
-    sudo: yes
-    sudo_user: root
+- name: Create the homebrew_cache directory
+  file: dest="/mnt/transient_nfs/homebrew_temp" state=directory owner=ubuntu group=ubuntu
+  sudo: yes
+  sudo_user: root
 
-  - name: Create the homebrew_temp directory
-    file: dest="/mnt/transient_nfs/homebrew_cache" state=directory owner=ubuntu group=ubuntu
-    sudo: yes
-    sudo_user: root
+- name: Create the homebrew_temp directory
+  file: dest="/mnt/transient_nfs/homebrew_cache" state=directory owner=ubuntu group=ubuntu
+  sudo: yes
+  sudo_user: root
 
-  - name: Clone linuxbrew
-    git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest={{ gvl_app_path }}/linuxbrew accept_hostkey=yes force=yes
+- name: Clone linuxbrew
+  git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest={{ gvl_app_path }}/linuxbrew accept_hostkey=yes force=yes
 
-  # copy across the .sh file to add the correct pathing to the profile.d directory so users can access the software correctly.
-  - name: Add the brew paths to path, manpath and infopath
-    template: src=linuxbrew-paths.j2 dest=/etc/profile.d/linuxbrew-paths.sh owner=ubuntu
-    sudo: yes
-    sudo_user: root
+# copy across the .sh file to add the correct pathing to the profile.d directory so users can access the software correctly.
+- name: Add the brew paths to path, manpath and infopath
+  template: src=linuxbrew-paths.j2 dest=/etc/profile.d/linuxbrew-paths.sh owner=ubuntu
+  sudo: yes
+  sudo_user: root
 
-  #Update the brew formula library
-  - name: Update the brew formula library
-    homebrew: update_homebrew=yes
-    sudo: yes
-    sudo_user: ubuntu
+#Update the brew formula library
+- name: Update the brew formula library
+  homebrew: update_homebrew=yes
+  sudo: yes
+  sudo_user: ubuntu
 
-  #Now add the science, cbl and bioinformatics formula to the brew setup..
-  - name: Tap some kegs!
-    homebrew_tap: tap={{ item }} state=present
-    with_items:
-      - homebrew/science
-      - chapmanb/cbl
-      - tseemann/bioinformatics-linux
+#Now add the science, cbl and bioinformatics formula to the brew setup..
+- name: Tap some kegs!
+  homebrew_tap: tap={{ item }} state=present
+  with_items:
+    - homebrew/science
+    - chapmanb/cbl
+    - tseemann/bioinformatics-linux
 
-  #Install some required non-default brew packages
-  - name: Install pkg-config - install phase
-    homebrew: name=pkg-config state=present
+#Install some required non-default brew packages
+- name: Install pkg-config - install phase
+  homebrew: name=pkg-config state=present
 
-  - name: brew install libtool
-    homebrew: name=libtool state=present
+- name: brew install libtool
+  homebrew: name=libtool state=present
