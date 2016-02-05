@@ -5,7 +5,7 @@
 
 #install some extra perl modules for roary and Torsten's stuff
 - name: Install required perl modules
-cpanm: name={{ item }} notest=yes
+cpanm: name="{{ item }}" notest=yes
 with_items:
   - List::Util
   - Moo
@@ -35,7 +35,7 @@ sudo_user: root
 
 #Install Roary dependencies
 - name: Install Roary dependencies
-  homebrew: name={{ item }}
+  homebrew: name="{{ item }}"
   with_items:
     - bedtools
     - cd-hit
@@ -51,7 +51,7 @@ sudo_user: root
 
 #Now we need to fix it!
 - name: Make the krakendb dir
-  file: dest={{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb owner=ubuntu state=directory
+  file: dest="{{ gvl_app_path }}"/linuxbrew/Cellar/kraken/krakendb owner=ubuntu state=directory
   sudo: yes
   sudo_user: ubuntu
 

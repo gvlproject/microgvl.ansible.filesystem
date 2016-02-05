@@ -9,7 +9,7 @@
   sudo_user: root
 
 - name: Install some more required system packages
-  apt: pkg={{ item }} state=latest
+  apt: pkg="{{ item }}" state=latest
   with_items:
     - build-essential
     - curl
@@ -39,7 +39,7 @@
   sudo_user: root
 
 - name: Clone linuxbrew
-  git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest={{ gvl_app_path }}/linuxbrew accept_hostkey=yes force=yes
+  git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest="{{ gvl_app_path }}"/linuxbrew accept_hostkey=yes force=yes
 
 # copy across the .sh file to add the correct pathing to the profile.d directory so users can access the software correctly.
 - name: Add the brew paths to path, manpath and infopath
@@ -55,7 +55,7 @@
 
 #Now add the science, cbl and bioinformatics formula to the brew setup..
 - name: Tap some kegs!
-  homebrew_tap: tap={{ item }} state=present
+  homebrew_tap: tap="{{ item }}" state=present
   with_items:
     - homebrew/science
     - chapmanb/cbl
