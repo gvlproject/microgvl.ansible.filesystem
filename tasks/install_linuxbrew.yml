@@ -2,8 +2,6 @@
 # Ansible script to install linuxbrew and associated requirements. It will put it into {{ gvl_app_path }} and use sensible temp dirs etc.
 # It also sets the pathing correctly for linuxbrew for anyuser that logs in via ssh or a login terminal.
 #
-
-environment: "{{ linuxbrew_env }}"
 tasks:
   # Install some extra required system packages
   - name: Update the apt cache

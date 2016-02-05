@@ -11,6 +11,8 @@
 
 #Include statements for the other tools. Starting with linux brew
 - include: install_linuxbrew.yml
+  environment: "{{ linuxbrew_env }}"
 
 #Install nullarbor and associated packages via brew
 - include: install_nullarbor.yml
+  environment: "{{ linuxbrew_env }}"
