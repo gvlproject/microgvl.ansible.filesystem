@@ -4,7 +4,7 @@
 
 # Start by making sure that the directory /mnt/gvl/apps exists..
 
-- name: Check gvl_apps directory exists (default: /mnt/gvl/apps)
+- name: Check gvl_apps directory exists
   file: {{ gvl_app_path }} state=directory owner=ubuntu group=ubuntu
   sudo: yes
   sudo_user: ubuntu
