@@ -3,7 +3,7 @@
 # It also sets the pathing correctly for linuxbrew for anyuser that logs in via ssh or a login terminal.
 #
 
-environment: {{ linuxbrew_env }}
+environment: "{{ linuxbrew_env }}"
 tasks:
   # Install some extra required system packages
   - name: Update the apt cache

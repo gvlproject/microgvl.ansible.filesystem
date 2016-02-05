@@ -2,7 +2,7 @@
 # Script to install nullarbor and associated software tools via linuxbrew
 #
 
-environment: {{ linuxbrew_env }}
+environment: "{{ linuxbrew_env }}"
 
 tasks:
   #install some extra perl modules for roary and Torsten's stuff
