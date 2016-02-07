@@ -7,7 +7,7 @@
 - name: Check gvl_apps directory exists
   file: name="{{ gvl_app_path }}" state=directory owner=ubuntu group=ubuntu
   sudo: yes
-  sudo_user: ubuntu
+  sudo_user: root
 
 #Include statements for the other tools. Starting with linux brew
 - include: install_linuxbrew.yml
