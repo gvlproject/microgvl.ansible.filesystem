@@ -11,7 +11,14 @@
 
 #Include statements for the other tools. Starting with linux brew
 - include: install_linuxbrew.yml
-  environment: "{{ linuxbrew_env }}"
+  environment:
+    PATH: "{{ gvl_app_path }}/linuxbrew/bin:{{ ansible_env.PATH }}"
+    MANPATH: "{{ gvl_app_path }}/linuxbrew/share/man:{{ ansible_env.MANPATH }}"
+    INFOPATH: "{{ gvl_app_path }}/linuxbrew/share/info:{{ ansible_env.INFOPATH }}"
+    HOMEBREW_TEMP: "/mnt/transient_nfs/homebrew_temp"
+    HOMEBREW_CACHE: "/mnt/transient_nfs/homebrew_cache"
+    TEMPDIR: "/mnt/transient_nfs"
+    TEMP: "/mnt/transient_nfs"
 
 #Install nullarbor and associated packages via brew
 - include: install_nullarbor.yml
