@@ -53,12 +53,14 @@
 #Update the brew formula library
 - name: Update the brew formula library
   homebrew: update_homebrew=yes
+  environment: "{{ linuxbrew_env }}"
   sudo: yes
   sudo_user: ubuntu
 
 #Now add the science, cbl and bioinformatics formula to the brew setup..
 - name: Tap some kegs!
   homebrew_tap: tap="{{ item }}" state=present
+  environment: "{{ linuxbrew_env }}"
   with_items:
     - homebrew/science
     - chapmanb/cbl
@@ -67,6 +69,8 @@
 #Install some required non-default brew packages
 - name: Install pkg-config - install phase
   homebrew: name=pkg-config state=present
+  environment: "{{ linuxbrew_env }}"
 
 - name: brew install libtool
   homebrew: name=libtool state=present
+  environment: "{{ linuxbrew_env }}"
