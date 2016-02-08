@@ -26,7 +26,7 @@
   get_url: url="http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2" dest="/mnt/transient_nfs/homebrew_cache"
   sudo: yes
   sudo_user: ubuntu
-  
+
 - name: Install fontconfig separately as it fails if installed with ImageMagick..
   homebrew: name=fontconfig state=present
   environment: "{{ linuxbrew_env }}"
@@ -69,11 +69,13 @@
 
 - name: Install the kraken database
   get_url: url="https://swift.rc.nectar.org.au:8888/v1/AUTH_377/public/minikraken.tgz" dest="/mnt/transient_nfs/minikraken.tgz" mode=0755
+  environment: "{{ linuxbrew_env }}"
   sudo: yes
   sudo_user: ubuntu
 
 - name: Untar the kraken database
   unarchive: src="/mnt/transient_nfs/minikraken.tgz" dest="{{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb" copy=no
+  environment: "{{ linuxbrew_env }}"
 
 - name: Move the kraken db
   shell: "mv {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/minikraken*/* {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/"
