@@ -48,7 +48,7 @@
   sudo_user: root
 
 - debug: msg="Current ansible environment PATH = {{ ansible_env.PATH }}"
-- debug: msg="Current PATH = {{ PATH }}"
+#- debug: msg="Current environment = {{ ansible_env | to_nice_json }}"
 
 #Update the brew formula library
 - name: Update the brew formula library
