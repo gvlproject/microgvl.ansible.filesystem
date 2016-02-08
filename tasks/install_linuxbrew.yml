@@ -46,6 +46,7 @@
   template: src=linuxbrew-paths.j2 dest=/etc/profile.d/linuxbrew-paths.sh owner=ubuntu
   sudo: yes
   sudo_user: root
+  debug: msg="Current PATH = {{ ansible_env.PATH }}"
 
 #Update the brew formula library
 - name: Update the brew formula library
