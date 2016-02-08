@@ -47,7 +47,8 @@
   sudo: yes
   sudo_user: root
 
-- debug: msg="Current PATH = {{ ansible_env.PATH }}"
+- debug: msg="Current ansible environment PATH = {{ ansible_env.PATH }}"
+- debug: msg="Current PATH = {{ PATH }}"
 
 #Update the brew formula library
 - name: Update the brew formula library
