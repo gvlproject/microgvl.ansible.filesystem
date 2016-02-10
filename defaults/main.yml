@@ -6,10 +6,10 @@ galaxy_tools_tool_list: "roles/microgvl.ansible.filesystem/files/scripts/shed_to
 
 gvl_fs_name: "mGVL filesystem"
 gvl_fs_flavour: "Microbial GVL"
-gvl_fs_version: "0.9-5"
+gvl_fs_version: "0.10-1"
 gvl_galaxy_brand: "mGVL {{ gvl_fs_version }}"
 cloudman_bucket_name: cloudman-os
-gvl_fs_archive_name: "microgvl-fs-{{ gvl_version }}.tar.gz"
+gvl_fs_archive_name: "microgvl-fs-{{ gvl_fs_version }}.tar.gz"
 
 gvl_fs_archive_path: /mnt/galaxy_archive
 OS_AUTH_URL: https://keystone.rc.nectar.org.au:5000/v2.0/
@@ -29,6 +29,7 @@ cmg_extra_files:
 #vars specific to the mGVL alone..
 
 gvl_app_path: "/mnt/gvl/apps"
+gvl_tmp_path: "/mnt/transient_nfs"
 
 #linuxbrew environment dictionary
 linuxbrew_env:

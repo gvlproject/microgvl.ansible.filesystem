@@ -14,3 +14,6 @@
 
 #Install nullarbor and associated packages via brew
 - include: install_nullarbor.yml
+
+#Install the visualizers
+- include: install_visualisers.yml

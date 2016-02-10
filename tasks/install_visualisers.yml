@@ -1,0 +1,51 @@
+#
+# Script to install genome Visualisers etc. (Artemis, IGV, Mauve and Bandage)
+#
+
+#Artemis
+- name: Download Artemis genome browser
+  get_url: url=ftp://ftp.sanger.ac.uk/pub/resources/software/artemis/artemis.tar.gz dest="{{ gvl_tmp_path }}/artemis.tar.gz"
+  sudo: yes
+  sudo_user: root
+
+- name: Make Artemis directory
+  file: dest="{{ gvl_app_path }}/artemis" owner=ubuntu group=ubuntu state=directory
+  sudo: yes
+  sudo_user: root
+
+- name: copy artemis to dir
+  unarchive: src="{{ gvl_tmp_path }}/artemis.tar.gz" dest="{{ gvl_app_path }}" copy=no
+  sudo: yes
+  sudo_user: root
+
+#Bandage - Ryan Wick's Assembly graph viewer.
+- name: Download bandage
+  get_url: url=http://github.com/rrwick/Bandage/releases/download/v0.7.1/Bandage_Ubuntu_14.04_static_v0.7.1.zip dest="{{ gvl_tmp_path }}/Bandage_Linux_static_v0.7.1.zip"
+  sudo: yes
+  sudo_user: root
+
+- name: make bandage directory
+  file: dest="{{ gvl_app_path }}/bandage" owner=ubuntu group=ubuntu state=directory
+  sudo: yes
+  sudo_user: root
+
+- name: unzip bandage
+  unarchive: src="{{ gvl_tmp_path }}/Bandage_Linux_static_v0.7.1.zip" dest="{{ gvl_app_path }}/bandage/" copy=no
+  sudo: yes
+  sudo_user: root
+
+#Aaron Darling's mauve
+- name: download Mauve
+  get_url: url=http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mauve_linux_snapshot_2015-02-13.tar.gz dest="{{ gvl_tmp_path }}/mauve.tar.gz"
+  sudo: yes
+  sudo_user: root
+
+- name: make mauve directory
+  file: dest="{{ gvl_app_path }}/mauve" owner=ubuntu group=ubuntu state=directory
+  sudo: yes
+  sudo_user: root
+
+- name: unzip mauve
+  unarchive: src="{{ gvl_tmp_path }}/mauve.tar.gz" dest="{{ gvl_app_path }}/mauve/" copy=no
+  sudo: yes
+  sudo_user: root
