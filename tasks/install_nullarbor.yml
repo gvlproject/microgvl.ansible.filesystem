@@ -22,10 +22,10 @@
   environment: "{{ linuxbrew_env }}"
 
 #Install some other modules manually
-- name: Download fontconfig to the cache as it's broken on homebrew
-  get_url: url="http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2" dest="{{ gvl_tmp_path }}/homebrew_cache"
-  sudo: yes
-  sudo_user: ubuntu
+#- name: Download fontconfig to the cache as it's broken on homebrew
+  #get_url: url="http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2" dest="{{ gvl_tmp_path }}/homebrew_cache"
+  #sudo: yes
+  #sudo_user: ubuntu
 
 - name: Install fontconfig separately as it fails if installed with ImageMagick..
   homebrew: name=fontconfig state=present

@@ -5,9 +5,23 @@
 # Simon Gladman - 2015 - VLSCI
 # Part of the Microbial GVL project.
 
-if [ -d "{{ galaxyFS_base_dir }}/other_tools/modulesfiles" ]
+if [ -d "{{ gvl_app_path }}/scripts/modulefiles" ]
 then
-  sudo cp -r {{ galaxyFS_base_dir }}/other_tools/modulesfiles/* /usr/share/modules/modulefiles
+  sudo cp -r "{{ gvl_app_path }}/scripts/modulefiles/*" /usr/share/modules/modulefiles
 else
   printf "No modules files to copy across."
+fi
+
+if [ -f "{{ gvl_app_path }}/scripts/linuxbrew-paths.sh" ]
+then
+  sudo cp "{{ gvl_app_path }}/scripts/linuxbrew-paths.sh" /etc/profile.d/
+else
+  printf "Linuxbrew paths file not found"
+fi
+
+if [ -f "{{ gvl_app_path }}/scripts/visualiser-paths.sh" ]
+then
+  sudo cp "{{ gvl_app_path }}/scripts/visualiser-paths.sh" /etc/profile.d/
+else
+  printf "Visualiser paths file not found"
 fi

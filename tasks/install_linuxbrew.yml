@@ -41,12 +41,6 @@
 - name: Clone linuxbrew
   git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest="{{ gvl_app_path }}"/linuxbrew accept_hostkey=yes force=yes
 
-# copy across the .sh file to add the correct pathing to the profile.d directory so users can access the software correctly.
-- name: Add the brew paths to path, manpath and infopath
-  template: src=linuxbrew-paths.j2 dest=/etc/profile.d/linuxbrew-paths.sh owner=ubuntu
-  sudo: yes
-  sudo_user: root
-
 - debug: msg="Current ansible environment PATH = {{ ansible_env.PATH }}"
 #- debug: msg="Current environment = {{ ansible_env | to_nice_json }}"
 
@@ -74,3 +68,15 @@
 - name: brew install libtool
   homebrew: name=libtool state=present
   environment: "{{ linuxbrew_env }}"
+
+#Copy the environments and module files across to the temp script dir.
+
+- name: Copy the linuxbrew env file to the temp script dir.
+  template: src=linuxbrew-paths.j2 dest="{{ gvl_app_path}}/scripts/linuxbrew-paths.sh"
+  sudo: yes
+  sudo_user: ubuntu
+
+- name: Copy the linuxbrew module file to the temp script dir.
+  template: src=linuxbrew.j2 dest="{{ gvl_app_path }}/scripts/linuxbrew.module"
+  sudo: yes
+  sudo_user: ubuntu

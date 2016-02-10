@@ -20,7 +20,7 @@
 
 #Bandage - Ryan Wick's Assembly graph viewer.
 - name: Download bandage
-  get_url: url=http://github.com/rrwick/Bandage/releases/download/v0.7.1/Bandage_Ubuntu_14.04_static_v0.7.1.zip dest="{{ gvl_tmp_path }}/Bandage_Linux_static_v0.7.1.zip"
+  get_url: url="http://github.com/rrwick/Bandage/releases/download/v0.7.1/Bandage_Ubuntu_14.04_static_v0.7.1.zip" dest="{{ gvl_tmp_path }}/Bandage_Linux_static_v0.7.1.zip"
   sudo: yes
   sudo_user: root
 
@@ -64,3 +64,12 @@
 
 - name: Unarchive IGV to app_dir
   unarchive: src="{{ gvl_tmp_path }}/IGV_2.3.67.zip" dest="{{ gvl_app_path }}/IGV" copy=no
+  sudo: yes
+  sudo_user: root
+
+# copy the visualiser env file to the temp scripts dir.
+
+- name: Copy the visualisers environment file to the temp scripts dir.
+  template: src="visualiser-paths.j2" dest="{{ gvl_app_path }}/scripts/visualiser-paths.sh"
+  sudo: yes
+  sudo_user: ubuntu
