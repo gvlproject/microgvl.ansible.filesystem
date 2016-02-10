@@ -49,3 +49,18 @@
   unarchive: src="{{ gvl_tmp_path }}/mauve.tar.gz" dest="{{ gvl_app_path }}/mauve/" copy=no
   sudo: yes
   sudo_user: root
+
+#IGV
+
+- name: Download IGV from the object store
+  get_url: url="https://swift.rc.nectar.org.au:8888/v1/AUTH_377/public/IGV_2.3.67.zip" dest="{{ gvl_tmp_path }}/IGV_2.3.67.zip"
+  sudo: yes
+  sudo_user: root
+
+- name: make an IGV directory
+  file: dest="{{ gvl_app_path }}/IGV" state=directory owner=ubuntu
+  sudo: yes
+  sudo_user: ubuntu
+
+- name: Unarchive IGV to app_dir
+  unarchive: src="{{ gvl_tmp_path }}/IGV_2.3.67.zip" dest="{{ gvl_app_path }}/IGV" copy=no
