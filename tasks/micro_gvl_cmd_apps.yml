@@ -23,7 +23,7 @@
 - name: Copy the copy_modules script to the poststart.d directory.
   template: src=copy_modules.j2 dest=/mnt/galaxy/gvl/poststart.d/copy_modules mode=0755
   sudo: yes
-  sudo_user: ubuntu
+  sudo_user: root
 
 #Include statements for the other tools. Starting with linux brew
 - include: install_linuxbrew.yml
