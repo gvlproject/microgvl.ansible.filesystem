@@ -1,0 +1,45 @@
+- name: install some system packages on localhost
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: Update the apt cache
+      apt: update_cache=yes
+      sudo: yes
+      sudo_user: root
+
+    - name: install some system packages
+      apt: pkg="{{ item }}" state=latest
+      with_items:
+        - build-essential
+        - curl
+        - git
+        - m4
+        - ruby
+        - texinfo
+        - libbz2-dev
+        - libcurl4-openssl-dev
+        - libexpat-dev
+        - libncurses-dev
+        - zlib1g-dev
+        - cpanminus
+        - pandoc
+        - oracle-java8-installer
+      sudo: yes
+      sudo_user: root
+
+    - name: Install required perl modules
+      cpanm: name="{{ item }}" notest=yes
+      with_items:
+        - List::Util
+        - Moo
+        - Spreadsheet::Read
+        - YAML::Tiny
+        - Bio::Roary
+        - https://github.com/chapmanb/vcftools-cpan/archive/v0.953.tar.gz
+      sudo: yes
+      sudo_user: root
+
+    - name: Upgrade List::Util
+      command: cpanm --upgrade List::Util
+      sudo: yes
+      sudo_user: root

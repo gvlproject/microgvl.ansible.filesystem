@@ -25,6 +25,11 @@
   sudo: yes
   sudo_user: root
 
+- name: Copy the postinstall ansible script to the scripts dir.
+  copy: src="system-ansible.yml" dest="{{ gvl_app_path }}/scripts/system-ansible.yml"
+  sudo: yes
+  sudo_user: ubuntu
+
 #Include statements for the other tools. Starting with linux brew
 - include: install_linuxbrew.yml
 

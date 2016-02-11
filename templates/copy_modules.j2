@@ -25,3 +25,10 @@ then
 else
   printf "Visualiser paths file not found"
 fi
+
+if [ -f "{{ gvl_app_path }}/scripts/system-ansible.yml"]
+then
+  ansible-playbook system-ansible.yml
+else
+  printf  "System ansible script not found."
+fi
