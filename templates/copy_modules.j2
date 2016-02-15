@@ -7,7 +7,7 @@
 
 if [ -d "{{ gvl_app_path }}/scripts/modulefiles" ]
 then
-  sudo cp -r "{{ gvl_app_path }}/scripts/modulefiles/*" /usr/share/modules/modulefiles
+  sudo cp -r "{{ gvl_app_path }}/scripts/modulefiles/*" /usr/share/modules/modulefiles/
 else
   printf "No modules files to copy across."
 fi
@@ -26,9 +26,9 @@ else
   printf "Visualiser paths file not found"
 fi
 
-if [ -f "{{ gvl_app_path }}/scripts/system-ansible.yml"]
+if [ -f "{{ gvl_app_path }}/scripts/system-ansible.yml" ]
 then
-  ansible-playbook system-ansible.yml
+  ansible-playbook "{{ gvl_app_path }}/scripts/system-ansible.yml"
 else
   printf  "System ansible script not found."
 fi
