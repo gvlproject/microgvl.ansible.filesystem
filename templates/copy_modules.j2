@@ -28,7 +28,7 @@ fi
 
 if [ -f "{{ gvl_app_path }}/scripts/system-ansible.yml" ]
 then
-  ansible-playbook {{ gvl_app_path }}/scripts/system-ansible.yml
+  /usr/bin/python /usr/local/bin/ansible-playbook -vvv /mnt/gvl/apps/scripts/system-ansible.yml
 else
   printf  "System ansible script not found."
 fi
