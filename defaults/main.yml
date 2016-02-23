@@ -29,15 +29,15 @@ cmg_extra_files:
 #vars specific to the mGVL alone..
 
 gvl_app_path: "/mnt/gvl/apps"
-gvl_tmp_path: "/mnt/transient_nfs"
+gvl_tmp_path: "/mnt/gvl/tmp"
 
 #linuxbrew environment dictionary
 linuxbrew_env:
     HOMEBREW_BUILD_FROM_SOURCE: 1
-    PATH: "{{ gvl_app_path }}/linuxbrew/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ gvl_app_path }}/linuxbrew/bin:{{ gvl_app_path }}/linuxbrew/sbin:{{ ansible_env.PATH }}"
     MANPATH: "{{ gvl_app_path }}/linuxbrew/share/man:{{ ansible_env.MANPATH }}"
     INFOPATH: "{{ gvl_app_path }}/linuxbrew/share/info:{{ ansible_env.INFOPATH }}"
-    HOMEBREW_TEMP: "/mnt/transient_nfs/homebrew_temp"
-    HOMEBREW_CACHE: "/mnt/transient_nfs/homebrew_cache"
-    TEMPDIR: "/mnt/transient_nfs"
-    TEMP: "/mnt/transient_nfs"
+    HOMEBREW_TEMP: "{{ gvl_tmp_path }}/homebrew_temp"
+    HOMEBREW_CACHE: "{{ gvl_tmp_path }}/homebrew_cache"
+    TEMPDIR: "{{ gvl_tmp_path }}"
+    TEMP: "{{ gvl_tmp_path}}"

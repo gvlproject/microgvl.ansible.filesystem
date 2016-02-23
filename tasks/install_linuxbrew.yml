@@ -61,12 +61,21 @@
     - tseemann/bioinformatics-linux
 
 #Install some required non-default brew packages
+
 - name: Install pkg-config - install phase
   homebrew: name=pkg-config state=present
   environment: "{{ linuxbrew_env }}"
 
 - name: brew install libtool
   homebrew: name=libtool state=present
+  environment: "{{ linuxbrew_env }}"
+
+- name: Install linuxbrew python 2.7
+  homebrew: name=python
+  environment: "{{ linuxbrew_env }}"
+
+- name: Install linuxbrew python 3
+  homebrew: name=python3
   environment: "{{ linuxbrew_env }}"
 
 #Copy the environments and module files across to the temp script dir.

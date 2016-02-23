@@ -1,7 +1,7 @@
 export HOMEBREW_BUILD_FROM_SOURCE=1
-export PATH="{{ gvl_app_path }}/linuxbrew/bin:$PATH"
+export PATH="{{ gvl_app_path }}/linuxbrew/bin:{{ gvl_app_path }}/linuxbrew/sbin:$PATH"
 export MANPATH="{{ gvl_app_path }}/linuxbrew/share/man:$MANPATH"
 export INFOPATH="{{ gvl_app_path }}/linuxbrew/share/info:$INFOPATH"
-export HOMEBREW_TEMP="/mnt/transient_nfs/homebrew_temp"
-export HOMEBREW_CACHE="/mnt/transient_nfs/homebrew_cache"
+export HOMEBREW_TEMP="{{ gvl_tmp_path }}/homebrew_temp"
+export HOMEBREW_CACHE="{{ gvl_tmp_path }}/homebrew_cache"
 export KRAKEN_DEFAULT_DB="{{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb"

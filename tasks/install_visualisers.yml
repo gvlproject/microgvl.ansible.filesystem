@@ -46,7 +46,7 @@
   sudo_user: root
 
 - name: unzip mauve
-  unarchive: src="{{ gvl_tmp_path }}/mauve.tar.gz" dest="{{ gvl_app_path }}/mauve/" copy=no
+  unarchive: src="{{ gvl_tmp_path }}/mauve.tar.gz" dest="{{ gvl_app_path }}/mauve" copy=no
   sudo: yes
   sudo_user: root
 

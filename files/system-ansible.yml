@@ -1,7 +1,17 @@
+#System-ansible.yml
+#This script is part of the Genomics Virtual Lab (GVL) project.
+#GVL Authors, 2016
+
+#This script is to change the base image partition post launch.
+#It installs system packages, adds some directories and installs some extra R
+#libraries. This is necessary as there is no way to alter the image
+#at build time.
+
 - name: install some system packages on localhost
   hosts: 127.0.0.1
   connection: local
   tasks:
+    #Install some extra system packages for microbial tools and linux brew
     - name: Update the apt cache
       apt: update_cache=yes
       sudo: yes
@@ -27,6 +37,7 @@
       sudo: yes
       sudo_user: root
 
+    #Install some extra perl modules for microbial tools
     - name: Install required perl modules
       cpanm: name="{{ item }}" notest=yes
       with_items:
@@ -41,5 +52,29 @@
 
     - name: Upgrade List::Util
       command: cpanm --upgrade List::Util
+      sudo: yes
+      sudo_user: root
+
+    #Create some temporary directories for linuxbrew incase theiyre not there already
+    - name: Create the homebrew_temp directory
+      file: dest="{{ gvl_tmp_path }}/homebrew_temp" state=directory owner=ubuntu group=ubuntu
+      sudo: yes
+      sudo_user: root
+
+    - name: Create the homebrew_cache directory
+      file: dest="{{ gvl_tmp_path }}/homebrew_cache" state=directory owner=ubuntu group=ubuntu
+      sudo: yes
+      sudo_user: root
+
+    #Install some extra R libraries
+    - name: Add some R packages.
+      command: >
+        Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', repos=c('http://cran.ms.unimelb.edu.au/')); print('Added'); } else { print('Already installed'); }"
+      register: r_result
+      failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+      changed_when: "'Added' in r_result.stdout"
+      with_items:
+        - ape
+        - nesoni-r
       sudo: yes
       sudo_user: root

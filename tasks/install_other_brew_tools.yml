@@ -1,0 +1,50 @@
+#
+# yaml file to install other bioinformatics tools via brew
+#
+# Part of the microgvl.ansible.filesystem role for the GVL project.
+
+# Install kallisto - transcript counter
+- name: Install kallisto
+  homebrew: name=kallisto
+  environment: "{{ linuxbrew_env }}"
+
+# Install Gingr - phylogenomics platform
+- name: Install gingr
+  homebrew: name=gingr
+  environment: "{{ linuxbrew_env }}"
+
+# Install kent-tools
+
+- name: Install kent-tools
+  homebrew: name=kent-tools
+  environment: "{{ linuxbrew_env }}"
+
+# Install kat
+- name: Install kat
+  homebrew: name=kat
+  environment: "{{ linuxbrew_env }}"
+
+#Install some extra R libraries
+- name: Add some R packages.
+  command: >
+    Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', repos=c('http://cran.ms.unimelb.edu.au/')); print('Added'); } else { print('Already installed'); }"
+  register: r_result
+  failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+  changed_when: "'Added' in r_result.stdout"
+  with_items:
+    - ape
+    - nesoni-r
+  sudo: yes
+  sudo_user: root
+
+# Install extra python packages to linuxbrew python.
+- name: Install some extra python packages to linuxbrew python.
+  pip: name="{{ item }}"
+  with_items:
+    - numpy
+    - biopython
+    - htseq
+    - khmer
+    - click
+    - nesoni
+    - DendroPy

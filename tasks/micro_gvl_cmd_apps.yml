@@ -38,3 +38,6 @@
 
 #Install the visualizers
 - include: install_visualisers.yml
+
+#Install other packages via brew, R and pip
+- include: install_other_brew_tools.yml
