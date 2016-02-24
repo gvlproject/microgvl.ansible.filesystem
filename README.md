@@ -37,14 +37,14 @@ Then to run the build process:
 script -q -c "ansible-playbook -vvv -i inventory/builders playbook.yml --tags "mgvl-fs" --extra-vars psql_galaxyftp_password=<choose a password> --extra-vars vnc_password=<choose a password> --extra-vars cleanup=no" /dev/null | tee ansible-build-logfile.log
   ```
 
-  5. The filesystem object called `microgvl-fs-{{ gvl_fs_version }}.tar.gz` will have been uploaded to the cloud object store in the container specified in the `cloudman_bucket_name:` variable in `roles/microgvl.ansible.filesystem/default/main.yml`.
+  5. The filesystem object called `microgvl-fs-< version## >.tar.gz` will have been uploaded to the cloud object store in the container specified in the `cloudman_bucket_name:` variable in `roles/microgvl.ansible.filesystem/default/main.yml`.
 
   6. At this stage, the microgvl-apps-{{ gvl_fs_version }}.tar.gz archive is not created or uploaded to the object store by the script and both things must be done manually.
     * ssh into the build target instance as ubuntu
     * Create a tarball of the /mnt/gvl directory by:
     ```
     $ cd /mnt/gvl
-    $ sudo tar -zcf /mnt/galaxy_archive/microgvl-apps-{{ gvl_fs_version }}.tar.gz .
+    $ sudo tar -zcf /mnt/galaxy_archive/microgvl-apps-< version## >.tar.gz .
     ```
     * Upload the resulting tarball into the same cloud object store container as the filesystem object.
 
