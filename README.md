@@ -1,14 +1,17 @@
 # microgvl.ansible.filesystem
 
-The ansible playbook for the Microbial Genomics Virtual Laboratory (mGVL) filesystems. It is an extension of the normal GVL filesystem ansible script. It is located at https://github.com/gvlproject/microgvl.ansible.filesystem
+This is the ansible playbook for the **Microbial Genomics Virtual Laboratory (mGVL)** filesystems. It is an extension of the normal GVL filesystem ansible script. It is located at [https://github.com/gvlproject/microgvl.ansible.filesystem](https://github.com/gvlproject/microgvl.ansible.filesystem)
 
 This role creates two filesystem objects for later use with the GVL launch system (one automatically, second one manually.)
 
-1. The mGVL galaxy filesystem object - **microgvl-fs-version##.tar.gz**
+1. The mGVL galaxy filesystem object - **microgvl-fs-< version## >.tar.gz**
+2. The mGVL application filesystem object - **microgvl-apps-< version## >.tar.gz**
 
-## Usage
+These two tarballs are then used by the GVL launcher to instantiate new mGVL instances.
 
-To use the role you need to clone the gvl.ansible.playbook script and follow the instructions in it's readme to download and install the dependencies (mostly extra roles including this one.)
+## Usage/Building the mGVL
+
+To use the role you need to clone the gvl.ansible.playbook script ([https://github.com/gvlproject/gvl.ansible.playbook](https://github.com/gvlproject/gvl.ansible.playbook)) and follow the instructions in it's readme to download and install the dependencies (mostly extra roles including this one.)
 
 Then to run the build process:
 
@@ -85,7 +88,7 @@ The layout of the role is as follows:
 
     * *install_linuxbrew.yml* - Installs base linuxbrew and some of the required brew packages.
 
-    * *install_nullarbor.yml* - Installs T. Seemanns nulalrbor pipeline and associated packages via linuxbrew and perl cpanm. It also downloads and sets up the kraken microbial identifier database.
+    * *install_nullarbor.yml* - Installs T. Seemann's nullarbor pipeline and associated packages via linuxbrew and perl cpanm. It also downloads and sets up the kraken microbial identifier database.
 
     * *install_visualisers.yml* - Installs various genomics visualiser software such as Mauve, IGV, Artemis and Bandage.
 
