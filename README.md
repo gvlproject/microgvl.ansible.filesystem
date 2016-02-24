@@ -5,7 +5,10 @@ This is the ansible playbook for the **Microbial Genomics Virtual Laboratory (mG
 This role creates two filesystem objects for later use with the GVL launch system (one automatically, second one manually.)
 
 1. The mGVL galaxy filesystem object - **microgvl-fs-< version## >.tar.gz**
+  * Contains Galaxy, all of the installed Galaxy tools, the poststart.d script directory and the ftp upload store.
 2. The mGVL application filesystem object - **microgvl-apps-< version## >.tar.gz**
+  * Contains installations of all of commandline tools for the mGVL.
+  * Contains the linuxbrew installations and linuxbrew itself.
 
 These two tarballs are then used by the GVL launcher to instantiate new mGVL instances.
 
