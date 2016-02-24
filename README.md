@@ -1,8 +1,51 @@
 # microgvl.ansible.filesystem
 
-The ansible playbook for the microbial gvl filesystem. It is an extension of the normal GVL filesystem ansible script. It is located at https://github.com/gvlproject/microgvl.ansible.filesystem
+The ansible playbook for the Microbial Genomics Virtual Laboratory (mGVL) filesystems. It is an extension of the normal GVL filesystem ansible script. It is located at https://github.com/gvlproject/microgvl.ansible.filesystem
 
-## Role
+This role creates two filesystem objects for later use with the GVL launch system (one automatically, second one manually.)
+
+1. The mGVL galaxy filesystem object - **microgvl-fs-version##.tar.gz**
+
+## Usage
+
+To use the role you need to clone the gvl.ansible.playbook script and follow the instructions in it's readme to download and install the dependencies (mostly extra roles including this one.)
+
+Then to run the build process:
+
+  1. Start a cloud machine of the GVL base image using the cloud dashboard (using the OpenStack cloud dashboard, it will be slightly different for other cloud types):
+    * On the *Details* tab, give it a sensible name, select at least a medium machine size (2vpus), use the *GVL 4.0.0* image.
+    * On the Access and Security tab: select *cloudman_key_pair* (or a known key pair), *Cloudman* security group.
+    * On the Post Creation tab: Select *Direct Input* and put `no_start = True` in the script input box.
+    * Click the *Launch* button.
+    * Once it starts, record the ip address of the newly created machine.
+  2. Create the inventory file.
+    * Copy the `inventory/builders.sample` file to `inventory/builders`.
+    * Edit the `inventory/builders` and replace *< instance-ip >* under `[gvl-filesystem-hosts]` with the ip address of the machine you created in step 1.
+  3. Edit `roles/microgvl.ansible.filesystem/default/main.yml` and add your cloud credentials to the appropriate variables.
+  4. From the gvl.ansible.playbook directory, run the playbook! (Preferably from a screen)
+
+  ```
+  ansible-playbook -i inventory/builders playbook.yml --tags "mgvl-fs" --extra-vars psql_galaxyftp_password=<choose a password> --extra-vars vnc_password=<choose a password> --extra-vars cleanup=no
+  ```
+
+  but I would suggest running it using linux's script command with tee to capture the verbose (-vvv flag in the command line) ansible output into a logfile thus:
+
+  ```
+script -q -c "ansible-playbook -vvv -i inventory/builders playbook.yml --tags "mgvl-fs" --extra-vars psql_galaxyftp_password=<choose a password> --extra-vars vnc_password=<choose a password> --extra-vars cleanup=no" /dev/null | tee ansible-build-logfile.log
+  ```
+
+  5. The filesystem object called `microgvl-fs-{{ gvl_fs_version }}.tar.gz` will have been uploaded to the cloud object store in the container specified in the `cloudman_bucket_name:` variable in `roles/microgvl.ansible.filesystem/default/main.yml`.
+
+  6. At this stage, the microgvl-apps-{{ gvl_fs_version }}.tar.gz archive is not created or uploaded to the object store by the script and both things must be done manually.
+    * ssh into the build target instance as ubuntu
+    * Create a tarball of the /mnt/gvl directory by:
+    ```
+    $ cd /mnt/gvl
+    $ sudo tar -zcf /mnt/galaxy_archive/microgvl-apps-{{ gvl_fs_version }}.tar.gz .
+    ```
+    * Upload the resulting tarball into the same cloud object store container as the filesystem object.
+
+## Role design
 
 This playbook has been designed as a role under the **gvl.ansible.playbook**. Located at: https://github.com/gvlproject/gvl.ansible.playbook.
 
