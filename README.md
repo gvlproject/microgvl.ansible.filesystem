@@ -15,7 +15,7 @@ To use the role you need to clone the gvl.ansible.playbook script ([https://gith
 
 Then to run the build process:
 
-  1. Start a cloud machine of the GVL base image using the cloud dashboard (using the OpenStack cloud dashboard, it will be slightly different for other cloud types):
+  1. Start a cloud machine of the GVL base image using the cloud dashboard launch functionality (this describes the OpenStack cloud dashboard, it will be slightly different for other cloud types):
     * On the *Details* tab, give it a sensible name, select at least a medium machine size (2vpus), use the *GVL 4.0.0* image.
     * On the Access and Security tab: select *cloudman_key_pair* (or a known key pair), *Cloudman* security group.
     * On the Post Creation tab: Select *Direct Input* and put `no_start = True` in the script input box.
