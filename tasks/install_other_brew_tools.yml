@@ -24,6 +24,11 @@
   homebrew: name=kat
   environment: "{{ linuxbrew_env }}"
 
+# Install trimmomatic
+- name: Install trimmomatic
+  homebrew: name=trimmomatic
+  environment: "{{ linuxbrew_env }}"
+
 #Install some extra R libraries
 - name: Add some R packages.
   command: >
@@ -48,3 +53,4 @@
     - click
     - nesoni
     - DendroPy
+  environemnt: "{{ linuxbrew_env }}"
