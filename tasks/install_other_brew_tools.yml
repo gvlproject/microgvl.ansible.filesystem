@@ -53,4 +53,4 @@
     - click
     - nesoni
     - DendroPy
-  environemnt: "{{ linuxbrew_env }}"
+  environment: "{{ linuxbrew_env }}"
