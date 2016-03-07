@@ -86,6 +86,6 @@
   sudo_user: ubuntu
 
 - name: Copy the linuxbrew module file to the temp script dir.
-  template: src=linuxbrew.j2 dest="{{ gvl_app_path }}/scripts/linuxbrew.module"
+  template: src=linuxbrew.j2 dest="{{ gvl_app_path }}/scripts/modulefiles/linuxbrew.module"
   sudo: yes
   sudo_user: ubuntu

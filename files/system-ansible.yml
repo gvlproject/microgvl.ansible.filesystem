@@ -57,12 +57,12 @@
 
     #Create some temporary directories for linuxbrew incase theiyre not there already
     - name: Create the homebrew_temp directory
-      file: dest="{{ gvl_tmp_path }}/homebrew_temp" state=directory owner=ubuntu group=ubuntu
+      file: dest="/mnt/gvl/tmp/homebrew_temp" state=directory owner=ubuntu group=ubuntu
       sudo: yes
       sudo_user: root
 
     - name: Create the homebrew_cache directory
-      file: dest="{{ gvl_tmp_path }}/homebrew_cache" state=directory owner=ubuntu group=ubuntu
+      file: dest="/mnt/gvl/tmp/homebrew_cache" state=directory owner=ubuntu group=ubuntu
       sudo: yes
       sudo_user: root
 
