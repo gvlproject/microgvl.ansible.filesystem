@@ -13,10 +13,10 @@ gvl_fs_archive_name: "microgvl-fs-{{ gvl_fs_version }}.tar.gz"
 
 gvl_fs_archive_path: /mnt/galaxy_archive
 OS_AUTH_URL: https://keystone.rc.nectar.org.au:5000/v2.0/
-OS_TENANT_ID: 377
-OS_TENANT_NAME: GenomicsVL
-OS_USERNAME: simon.gladman@unimelb.edu.au
-OS_PASSWORD: YmIxZjJmNGYzMzNkZjFh
+OS_TENANT_ID: [put id here] 
+OS_TENANT_NAME: [put tenant here]
+OS_USERNAME: [put user here]
+OS_PASSWORD: [put password here]
 
 cmg_extra_files:
   - src: roles/gvl.ansible.filesystem/files/galaxy-app

@@ -677,7 +677,6 @@ tools:
   tool_shed_url: https://toolshed.g2.bx.psu.edu
 - name: velvetoptimiser
   owner: simon-gladman
-  revision: 55327a2202ca
   tool_panel_section_id: ngs_assembly
   tool_shed_url: https://testtoolshed.g2.bx.psu.edu
 - name: trinityrnaseq
