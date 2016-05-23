@@ -14,4 +14,14 @@ galaxy_info:
   - cloud
   - genomics
 dependencies:
-  - { role: gvl.ansible.filesystem }
+  - { role: gvl.ansible.filesystem,
+      gvl_galaxy_tools_tool_list_files: "{{ microgvl_galaxy_tools_tool_list }}",
+      gvl_fs_name: "{{ microgvl_fs_name }}",
+      gvl_fs_flavour: "{{ microgvl_fs_flavour }}",
+      gvl_fs_version: "{{ microgvl_fs_version }}",
+      gvl_galaxy_brand: "{{ microgvl_galaxy_brand }}",
+      cloudman_bucket_name: "{{ microgvl_cloudman_bucket_name }}",
+      gvl_fs_archive_name: "{{ microgvl_fs_archive_name }}",
+      gvl_fs_archive_path: "{{ microgvl_fs_archive_path }}",
+      gvl_cmg_extra_files: "{{ micro_cmg_extra_files }}"
+    }

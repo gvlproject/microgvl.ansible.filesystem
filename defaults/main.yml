@@ -2,23 +2,23 @@
 # Vars over-ridden from the default gvl filesystem to suit the microbial filesystem.
 #
 
-galaxy_tools_tool_list: "roles/microgvl.ansible.filesystem/files/scripts/shed_tool_list.yaml.mgvl"
+microgvl_galaxy_tools_tool_list: [ "roles/gvl.ansible.filesystem/files/scripts/shed_tool_list.yaml.gvl", "roles/microgvl.ansible.filesystem/files/scripts/shed_tool_list.yaml.mgvl" ]
 
-gvl_fs_name: "mGVL filesystem"
-gvl_fs_flavour: "Microbial GVL"
-gvl_fs_version: "0.10-1"
-gvl_galaxy_brand: "mGVL {{ gvl_fs_version }}"
-cloudman_bucket_name: cloudman-os
-gvl_fs_archive_name: "microgvl-fs-{{ gvl_fs_version }}.tar.gz"
+microgvl_fs_name: "mGVL filesystem"
+microgvl_fs_flavour: "Microbial GVL"
+microgvl_fs_version: "0.10-1"
+microgvl_galaxy_brand: "mGVL {{ gvl_fs_version }}"
+microgvl_cloudman_bucket_name: cloudman-os
+microgvl_fs_archive_name: "microgvl-fs-{{ gvl_fs_version }}.tar.gz"
 
-gvl_fs_archive_path: /mnt/galaxy_archive
+microgvl_fs_archive_path: /mnt/galaxy_archive
 OS_AUTH_URL: https://keystone.rc.nectar.org.au:5000/v2.0/
-OS_TENANT_ID: [put id here] 
+OS_TENANT_ID: [put id here]
 OS_TENANT_NAME: [put tenant here]
 OS_USERNAME: [put user here]
 OS_PASSWORD: [put password here]
 
-cmg_extra_files:
+micro_cmg_extra_files:
   - src: roles/gvl.ansible.filesystem/files/galaxy-app
     dest: "{{ galaxyFS_base_dir }}"
   - src: roles/gvl.ansible.filesystem/files/galaxy-var/
