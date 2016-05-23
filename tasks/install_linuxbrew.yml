@@ -2,31 +2,31 @@
 # Ansible script to install linuxbrew and associated requirements. It will put it into {{ gvl_app_path }} and use sensible temp dirs etc.
 # It also sets the pathing correctly for linuxbrew for anyuser that logs in via ssh or a login terminal.
 #
-  # Install some extra required system packages
-- name: Update the apt cache
-  apt: update_cache=yes
-  sudo: yes
-  sudo_user: root
-
-- name: Install some more required system packages
-  apt: pkg="{{ item }}" state=latest
-  with_items:
-    - build-essential
-    - curl
-    - git
-    - m4
-    - ruby
-    - texinfo
-    - libbz2-dev
-    - libcurl4-openssl-dev
-    - libexpat-dev
-    - libncurses-dev
-    - zlib1g-dev
-    - cpanminus
-    - pandoc
-    - oracle-java8-installer
-  sudo: yes
-  sudo_user: root
+  # Install some extra required system packages - this has been moved to the GVL base image as of version 4.1
+# - name: Update the apt cache
+#   apt: update_cache=yes
+#   sudo: yes
+#   sudo_user: root
+#
+# - name: Install some more required system packages
+#   apt: pkg="{{ item }}" state=latest
+#   with_items:
+#     - build-essential
+#     - curl
+#     - git
+#     - m4
+#     - ruby
+#     - texinfo
+#     - libbz2-dev
+#     - libcurl4-openssl-dev
+#     - libexpat-dev
+#     - libncurses-dev
+#     - zlib1g-dev
+#     - cpanminus
+#     - pandoc
+#     - oracle-java8-installer
+#   sudo: yes
+#   sudo_user: root
 
 - name: Create the homebrew_cache directory
   file: dest="{{ gvl_tmp_path }}/homebrew_temp" state=directory owner=ubuntu group=ubuntu
@@ -85,7 +85,12 @@
   sudo: yes
   sudo_user: ubuntu
 
+- name: Create a directory for the linuxbrew modulefile
+  file: dest="{{ gvl_app_path }}/scripts/modulefiles/linuxbrew" state=directory owner=ubuntu group=ubuntu
+  sudo: yes
+  sudo_user: ubuntu
+
 - name: Copy the linuxbrew module file to the temp script dir.
-  template: src=linuxbrew.j2 dest="{{ gvl_app_path }}/scripts/modulefiles/linuxbrew.module"
+  template: src=linuxbrew.j2 dest="{{ gvl_app_path }}/scripts/modulefiles/linuxbrew/0.1"
   sudo: yes
   sudo_user: ubuntu

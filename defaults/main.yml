@@ -6,7 +6,7 @@ microgvl_galaxy_tools_tool_list: [ "roles/gvl.ansible.filesystem/files/scripts/s
 
 microgvl_fs_name: "mGVL filesystem"
 microgvl_fs_flavour: "Microbial GVL"
-microgvl_fs_version: "0.10-1"
+microgvl_fs_version: "0.11-1"
 microgvl_galaxy_brand: "mGVL {{ gvl_fs_version }}"
 microgvl_cloudman_bucket_name: cloudman-os
 microgvl_fs_archive_name: "microgvl-fs-{{ gvl_fs_version }}.tar.gz"
@@ -31,13 +31,15 @@ micro_cmg_extra_files:
 gvl_app_path: "/mnt/gvl/apps"
 gvl_tmp_path: "/mnt/gvl/tmp"
 
+microgvl_homebrew_temp: "{{ gvl_tmp_path }}/homebrew_temp"
+microgvl_homebrew_cache: "{{ gvl_tmp_path }}/homebrew_cache"
+
 #linuxbrew environment dictionary
 linuxbrew_env:
-    HOMEBREW_BUILD_FROM_SOURCE: 1
     PATH: "{{ gvl_app_path }}/linuxbrew/bin:{{ gvl_app_path }}/linuxbrew/sbin:{{ ansible_env.PATH }}"
     MANPATH: "{{ gvl_app_path }}/linuxbrew/share/man:{{ ansible_env.MANPATH }}"
     INFOPATH: "{{ gvl_app_path }}/linuxbrew/share/info:{{ ansible_env.INFOPATH }}"
-    HOMEBREW_TEMP: "{{ gvl_tmp_path }}/homebrew_temp"
-    HOMEBREW_CACHE: "{{ gvl_tmp_path }}/homebrew_cache"
+    HOMEBREW_TEMP: "{{ microgvl_homebrew_temp }}"
+    HOMEBREW_CACHE: "{{ microgvl_homebrew_cache }}"
     TEMPDIR: "{{ gvl_tmp_path }}"
     TEMP: "{{ gvl_tmp_path}}"

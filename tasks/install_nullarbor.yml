@@ -4,6 +4,7 @@
 
 
 #install some extra perl modules for roary and Torsten's stuff
+#This has been moved to the GVL base image as of version 4.1 but I'll leave it here anyway.
 - name: Install required perl modules
   cpanm: name="{{ item }}" notest=yes
   with_items:
