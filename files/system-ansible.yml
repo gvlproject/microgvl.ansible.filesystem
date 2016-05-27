@@ -42,23 +42,18 @@
     #   sudo: yes
     #   sudo_user: root
     #
-    # #Install some extra perl modules for microbial tools
-    # - name: Install required perl modules
-    #   cpanm: name="{{ item }}" notest=yes
-    #   with_items:
-    #     - List::Util
-    #     - Moo
-    #     - Spreadsheet::Read
-    #     - YAML::Tiny
-    #     - Bio::Roary
-    #     - https://github.com/chapmanb/vcftools-cpan/archive/v0.953.tar.gz
-    #   sudo: yes
-    #   sudo_user: root
+    #Install some extra perl modules for microbial tools
+    - name: Install required perl modules
+      cpanm: name="{{ item }}" notest=yes
+      with_items:
+        - Bio::Roary
+      sudo: yes
+      sudo_user: root
     #
-    # - name: Upgrade List::Util
-    #   command: cpanm --upgrade List::Util
-    #   sudo: yes
-    #   sudo_user: root
+    - name: Upgrade List::Util
+      command: cpanm --upgrade List::Util
+      sudo: yes
+      sudo_user: root
 
     #Create some temporary directories for linuxbrew incase theiyre not there already
     - name: Create the homebrew_temp directory
