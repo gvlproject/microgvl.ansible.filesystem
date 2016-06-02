@@ -57,6 +57,9 @@
     - mafft
     - exonerate
 
+# TODO: Current spades brew install fails badly. Need to use spades_compile.sh script to compile manaully,
+# then copy files to a new folder in Cellar called spades/3.8.0 (or newer version number) then run brew link spades
+
 #Finally, install nullarbor.
 - name: Install nullarbor
   homebrew: name=nullarbor state=present

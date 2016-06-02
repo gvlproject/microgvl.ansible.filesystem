@@ -29,6 +29,16 @@
   homebrew: name=trimmomatic
   environment: "{{ linuxbrew_env }}"
 
+- name: Install extra brew items
+  homebrew: name="{{ item }}"
+  environment: "{{ linuxbrew_env }}"
+  with-items:
+    - sratoolkit
+    - figtree
+    - vsearch
+    - andi
+
+
 #Install some extra R libraries
 - name: Add some R packages.
   command: >
@@ -53,4 +63,14 @@
     - click
     - nesoni
     - DendroPy
+    - ncbi-genome-download
+  environment: "{{ linuxbrew_env }}"
+
+# Install some python3 packages too!
+- name: Install some python3 packages
+  pip: name="{{ item }}" executable=pip3
+  with_items:
+    - numpy
+    - circlator
+    - matplotlib
   environment: "{{ linuxbrew_env }}"

@@ -24,7 +24,7 @@
 #     - zlib1g-dev
 #     - cpanminus
 #     - pandoc
-#     - oracle-java8-installer
+#     - oracle-java8-installer this is another comment
 #   sudo: yes
 #   sudo_user: root
 
@@ -61,6 +61,7 @@
     - homebrew/science
     - chapmanb/cbl
     - tseemann/bioinformatics-linux
+    - homebrew/python
 
 #Install some required non-default brew packages
 

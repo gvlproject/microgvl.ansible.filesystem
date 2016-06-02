@@ -67,6 +67,35 @@
   sudo: yes
   sudo_user: root
 
+#ete3
+
+- name: Download the ete3 toolkit and install it.
+  get_url: url="http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh" dest="{{ gvl_tmp_path }}/Miniconda-latest-Linux-x86_64.sh"
+  sudo: yes
+  sudo_user: ubuntu
+
+- name: make the anaconda for ete3
+  command: bash Miniconda-latest-Linux-x86_64.sh -b -p "{{ gvl_app_path }}"/anaconda_ete/
+  sudo: yes
+  sudo_user: ubuntu
+
+- name: install ete3 and associated condas
+  command: conda install -c etetoolkit ete3 ete3_external_apps
+  sudo: yes
+  sudo_user: ubuntu
+  environment:
+    PATH: "{{ gvl_app_path }}/anaconda_ete/bin:{{ ansible_env.PATH }}"
+
+- name: Create a directory for the ete3 modulefile
+  file: dest="{{ gvl_app_path }}/scripts/modulefiles/ete3" state=directory owner=ubuntu group=ubuntu
+  sudo: yes
+  sudo_user: ubuntu
+
+- name: Copy the ete3 module file to the temp script dir.
+  template: src=ete3.j2 dest="{{ gvl_app_path }}/scripts/modulefiles/ete3/3.0.0b35"
+  sudo: yes
+  sudo_user: ubuntu
+
 # copy the visualiser env file to the temp scripts dir.
 
 - name: Copy the visualisers environment file to the temp scripts dir.
