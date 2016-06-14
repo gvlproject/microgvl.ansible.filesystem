@@ -1,0 +1,21 @@
+#File to add any fixes for Galaxy tools that require it. tbl2asn springs to mind...
+
+#Get the newest version of tbl2asn
+- name: Download the newest version of tbl2asn
+  get_url: url="ftp://ftp.ncbi.nih.gov/toolbox/ncbi_tools/converters/by_program/tbl2asn/linux64.tbl2asn.gz" dest="{{ gvl_tmp_path }}/linux64.tbl2asn.gz" mode=0755
+  sudo: yes
+  sudo_user: ubuntu
+  environment: "{{ linuxbrew_env }}"
+
+#unzip it
+- name: unzip tbl2asn
+  unarchive: src="{{ gvl_tmp_path }}/linux64.tbl2asn.gz" dest="{{ gvl_tmp_path }}/tbl2asn" copy=no
+  sudo: yes
+  sudo_user: ubuntu
+
+#move it to the correct spot in the Galaxy tool heirarchy. This will change depending on the version of tbl2asn installed...
+- name: Move tbl2asn into Galaxy tool hierarchy
+  file: src="{{ gvl_tmp_path }}/tbl2asn" dest="/mnt/galaxy/tools/tbl2asn/24.3/takadonet/package_tbl2asn_24_3/41764d6a6a3c/bin/tbl2asn" mode="ug+rwx" force=yes
+  sudo: yes
+  sudo_user: galaxy
+

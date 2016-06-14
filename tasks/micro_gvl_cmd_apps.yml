@@ -41,3 +41,6 @@
 
 #Install other packages via brew, R and pip
 - include: install_other_brew_tools.yml
+
+#Fix Galaxy tools that require it. (especially tbl2asn)
+- include: fix_galaxy_tools.yml
