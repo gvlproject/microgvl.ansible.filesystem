@@ -6,6 +6,21 @@ tools:
 ## PACKAGES - Microbial GVL specific packages only
 ######################################################################
 
+#-----------------------------------------------------------
+# plots - Graph/Display Data
+
+- name: jbrowse
+  owner: iuc
+  tool_panel_section_id: plots
+  tool_shed_url: http://toolshed.g2.bx.psu.edu
+
+#-----------------------------------------------------------
+# convert - convert format
+
+- name: fml_gff3togtf
+  owner: vipints
+  tool_panel_section_id: convert
+  tool_shed_url: http://toolshed.g2.bx.psu.edu
 
 #-----------------------------------------------------------
 #alignment - Alignment
@@ -41,6 +56,14 @@ tools:
 - name: infernal
   owner: bgruening
   tool_panel_section_id: ngs_annotation
+  tool_shed_url: http://toolshed.g2.bx.psu.edu
+
+#-----------------------------------------------------------
+#ngs_variant_analysis - NGS: Annotation
+
+- name: snippy
+  owner: simon-gladman
+  tool_panel_section_id: ngs_variant_analysis
   tool_shed_url: http://toolshed.g2.bx.psu.edu
 
 #---------------------------------------------------------------------
