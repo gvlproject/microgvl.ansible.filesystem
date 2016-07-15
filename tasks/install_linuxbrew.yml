@@ -42,7 +42,7 @@
   git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest="{{ gvl_app_path }}/linuxbrew" accept_hostkey=yes force=yes
 
 - debug: msg="Current ansible environment PATH = {{ ansible_env.PATH }}"
-- debug: msg="Current ansible envorinment = {{ ansbile_env }}"
+- debug: msg="Current ansible envorinment = {{ ansible_env }}"
 - debug: msg="Current gvl_app_path = {{ gvl_app_path }}"
 #- debug: msg="Current environment = {{ ansible_env | to_nice_json }}"
 
