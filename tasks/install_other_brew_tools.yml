@@ -32,7 +32,7 @@
 - name: Install extra brew items
   homebrew: name="{{ item }}"
   environment: "{{ linuxbrew_env }}"
-  with-items:
+  with_items:
     - sratoolkit
     - figtree
     - vsearch
