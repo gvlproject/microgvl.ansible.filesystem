@@ -30,8 +30,8 @@
   homebrew: name=imagemagick install_options=build-from-source,with-librsvg
   environment: "{{ linuxbrew_env }}"
 
-- name: install blast+ with compile options --without-static and --without-check
-  homebrew: name=blast install_options=without-static,without-check
+- name: install blast+ 
+  homebrew: name=blast
   environment: "{{ linuxbrew_env }}"
 
 - name: install skewer
