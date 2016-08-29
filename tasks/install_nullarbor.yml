@@ -14,29 +14,23 @@
     - YAML::Tiny
     - Bio::Roary
     - https://github.com/chapmanb/vcftools-cpan/archive/v0.953.tar.gz
-  sudo: yes
-  sudo_user: root
+  become: yes
+  become_user: root
 
 #Install libpng manually.
 - name: brew install libpng
   homebrew: name=libpng
   environment: "{{ linuxbrew_env }}"
 
-#Install some other modules manually
-#- name: Download fontconfig to the cache as it's broken on homebrew
-  #get_url: url="http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.bz2" dest="{{ gvl_tmp_path }}/homebrew_cache"
-  #sudo: yes
-  #sudo_user: ubuntu
-
 - name: Install fontconfig separately as it fails if installed with ImageMagick..
   homebrew: name=fontconfig state=present
   environment: "{{ linuxbrew_env }}"
 
-- name: Install imagemagick with librsvg
-  homebrew: name=imagemagick install_options=with-librsvg
+- name: Install imagemagick with librsvg from source
+  homebrew: name=imagemagick install_options=build-from-source,with-librsvg
   environment: "{{ linuxbrew_env }}"
 
-- name: install blast+ with compile options --without-static an --without-check
+- name: install blast+ with compile options --without-static and --without-check
   homebrew: name=blast install_options=without-static,without-check
   environment: "{{ linuxbrew_env }}"
 
@@ -68,14 +62,14 @@
 #Now we need to fix it!
 - name: Make the krakendb dir
   file: dest="{{ gvl_app_path }}"/linuxbrew/Cellar/kraken/krakendb owner=ubuntu state=directory
-  sudo: yes
-  sudo_user: ubuntu
+  become: yes
+  become_user: ubuntu
 
 - name: Install the kraken database
   get_url: url="https://swift.rc.nectar.org.au:8888/v1/AUTH_377/public/minikraken.tgz" dest="{{ gvl_tmp_path }}/minikraken.tgz" mode=0755
   environment: "{{ linuxbrew_env }}"
-  sudo: yes
-  sudo_user: ubuntu
+  become: yes
+  become_user: ubuntu
 
 - name: Untar the kraken database
   unarchive: src="{{ gvl_tmp_path }}/minikraken.tgz" dest="{{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb" copy=no
@@ -83,8 +77,8 @@
 
 - name: Move the kraken db
   shell: "mv {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/minikraken*/* {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/"
-  sudo: yes
-  sudo_user: ubuntu
+  become: yes
+  become_user: ubuntu
 
 - name: Update the prokka version
   command: brew reinstall prokka --HEAD
@@ -92,8 +86,8 @@
 
 - name: update the perl List::Util version
   command: cpanm --upgrade List::Util
-  sudo: yes
-  sudo_user: root
+  become: yes
+  become_user: root
 
 - name: Reinstall nullarbor to get the head version.
   command: brew reinstall nullarbor --HEAD

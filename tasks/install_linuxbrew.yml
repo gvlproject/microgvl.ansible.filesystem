@@ -3,55 +3,74 @@
 # It also sets the pathing correctly for linuxbrew for anyuser that logs in via ssh or a login terminal.
 #
   # Install some extra required system packages - this has been moved to the GVL base image as of version 4.1
-# - name: Update the apt cache
-#   apt: update_cache=yes
-#   sudo: yes
-#   sudo_user: root
-#
-# - name: Install some more required system packages
-#   apt: pkg="{{ item }}" state=latest
-#   with_items:
-#     - build-essential
-#     - curl
-#     - git
-#     - m4
-#     - ruby
-#     - texinfo
-#     - libbz2-dev
-#     - libcurl4-openssl-dev
-#     - libexpat-dev
-#     - libncurses-dev
-#     - zlib1g-dev
-#     - cpanminus
-#     - pandoc
-#     - oracle-java8-installer this is another comment
-#   sudo: yes
-#   sudo_user: root
+ - name: Update the apt cache
+   apt: update_cache=yes
+   become: yes
+   become_user: root
+
+ - name: Install some more required system packages
+   apt: pkg="{{ item }}" state=latest
+   with_items:
+     - build-essential
+     - curl
+     - git
+     - m4
+     - ruby
+     - texinfo
+     - libbz2-dev
+     - libcurl4-openssl-dev
+     - libexpat-dev
+     - libncurses-dev
+     - zlib1g-dev
+     - cpanminus
+     - pandoc
+     - oracle-java8-installer
+   become: yes
+   become_user: root
+
+#Create the cache, temp and home locations
 
 - name: Create the homebrew_cache directory
   file: dest="{{ gvl_tmp_path }}/homebrew_temp" state=directory owner=ubuntu group=ubuntu
-  sudo: yes
-  sudo_user: root
+  become: yes
+  become_user: root
 
 - name: Create the homebrew_temp directory
   file: dest="{{ gvl_tmp_path }}/homebrew_cache" state=directory owner=ubuntu group=ubuntu
-  sudo: yes
-  sudo_user: root
+  become: yes
+  become_user: root
+  
+- name: Create the homebrew home location in /home
+  file: dest="{{ homebrew_path }}" state=directory owner=ubuntu group=ubuntu
+  become: yes
+  become_user: root
 
 - name: Clone linuxbrew
-  git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest="{{ gvl_app_path }}/linuxbrew" accept_hostkey=yes force=yes
+  git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest="{{ homebrew_path }}/.linuxbrew" accept_hostkey=yes force=yes
 
-- debug: msg="Current ansible environment PATH = {{ ansible_env.PATH }}"
-- debug: msg="Current ansible envorinment = {{ ansible_env }}"
-- debug: msg="Current gvl_app_path = {{ gvl_app_path }}"
+#- debug: msg="Current ansible environment PATH = {{ ansible_env.PATH }}"
+#- debug: msg="Current ansible envorinment = {{ ansible_env }}"
+#- debug: msg="Current gvl_app_path = {{ gvl_app_path }}"
 #- debug: msg="Current environment = {{ ansible_env | to_nice_json }}"
 
 #Update the brew formula library
 - name: Update the brew formula library
   homebrew: update_homebrew=yes
   environment: "{{ linuxbrew_env }}"
-  sudo: yes
-  sudo_user: ubuntu
+  become: yes
+  become_user: ubuntu
+
+#Install some required non-default brew packages initially
+
+- name: Install brew modules that need to go first! 
+  homebrew: name="{{ item }}" state=present
+  environment: "{{ linuxbrew_env }}"
+  with_items:
+    - gcc
+    - pkg-config
+    - libtool
+    - python
+    - python3
 
 #Now add the science, cbl and bioinformatics formula to the brew setup..
 - name: Tap some kegs!
@@ -59,41 +78,23 @@
   environment: "{{ linuxbrew_env }}"
   with_items:
     - homebrew/science
-    - chapmanb/cbl
     - tseemann/bioinformatics-linux
     - homebrew/python
 
-#Install some required non-default brew packages
-
-- name: Install pkg-config - install phase
-  homebrew: name=pkg-config state=present
-  environment: "{{ linuxbrew_env }}"
-
-- name: brew install libtool
-  homebrew: name=libtool state=present
-  environment: "{{ linuxbrew_env }}"
-
-- name: Install linuxbrew python 2.7
-  homebrew: name=python
-  environment: "{{ linuxbrew_env }}"
-
-- name: Install linuxbrew python 3
-  homebrew: name=python3
-  environment: "{{ linuxbrew_env }}"
-
+    
 #Copy the environments and module files across to the temp script dir.
 
 - name: Copy the linuxbrew env file to the temp script dir.
   template: src=linuxbrew-paths.j2 dest="{{ gvl_app_path}}/scripts/linuxbrew-paths.sh"
-  sudo: yes
-  sudo_user: ubuntu
+  become: yes
+  become_user: ubuntu
 
 - name: Create a directory for the linuxbrew modulefile
   file: dest="{{ gvl_app_path }}/scripts/modulefiles/linuxbrew" state=directory owner=ubuntu group=ubuntu
-  sudo: yes
-  sudo_user: ubuntu
+  become: yes
+  become_user: ubuntu
 
 - name: Copy the linuxbrew module file to the temp script dir.
   template: src=linuxbrew.j2 dest="{{ gvl_app_path }}/scripts/modulefiles/linuxbrew/0.1"
-  sudo: yes
-  sudo_user: ubuntu
+  become: yes
+  become_user: ubuntu

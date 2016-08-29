@@ -3,40 +3,19 @@
 #
 # Part of the microgvl.ansible.filesystem role for the GVL project.
 
-# Install kallisto - transcript counter
-- name: Install kallisto
-  homebrew: name=kallisto
-  environment: "{{ linuxbrew_env }}"
-
-# Install Gingr - phylogenomics platform
-- name: Install gingr
-  homebrew: name=gingr
-  environment: "{{ linuxbrew_env }}"
-
-# Install kent-tools
-
-- name: Install kent-tools
-  homebrew: name=kent-tools
-  environment: "{{ linuxbrew_env }}"
-
-# Install kat
-- name: Install kat
-  homebrew: name=kat
-  environment: "{{ linuxbrew_env }}"
-
-# Install trimmomatic
-- name: Install trimmomatic
-  homebrew: name=trimmomatic
-  environment: "{{ linuxbrew_env }}"
-
 - name: Install extra brew items
   homebrew: name="{{ item }}"
   environment: "{{ linuxbrew_env }}"
   with-items:
+    - trimmomatic
     - sratoolkit
     - figtree
     - vsearch
     - andi
+    - kat
+    - kent-tools
+    - gingr
+    - kallisto
 
 
 #Install some extra R libraries
@@ -49,8 +28,11 @@
   with_items:
     - ape
     - nesoni-r
-  sudo: yes
-  sudo_user: root
+    - DESeq2
+    - edgeR
+    - limma
+  become: yes
+  become_user: root
 
 # Install extra python packages to linuxbrew python.
 - name: Install some extra python packages to linuxbrew python.
