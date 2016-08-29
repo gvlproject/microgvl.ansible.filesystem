@@ -44,6 +44,11 @@
   file: dest="{{ homebrew_path }}" state=directory owner=ubuntu group=ubuntu
   become: yes
   become_user: root
+  
+- name: Mount the linuxbrew dir to the newly created mount point using --bind
+  command: mount --bind "{{ gvl_app_path }}/linuxbrew" "{{ homebrew_path }}"
+  become: yes
+  become_user: root
 
 - name: Clone linuxbrew
   git: repo="https://github.com/Linuxbrew/linuxbrew.git" dest="{{ homebrew_path }}/.linuxbrew" accept_hostkey=yes force=yes
