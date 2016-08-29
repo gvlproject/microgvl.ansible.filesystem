@@ -64,6 +64,7 @@
     - nesoni
     - DendroPy
     - ncbi-genome-download
+    - bioblend
   environment: "{{ linuxbrew_env }}"
 
 # Install some python3 packages too!
