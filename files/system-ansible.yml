@@ -71,8 +71,20 @@
       become: yes
       become_user: root
       
-    - name: Mount the linuxbrew dir to the newly created mount point using --bind
-      command: mount --bind "/mnt/gvl/app/linuxbrew" "/home/linuxbrew"
+    - name: Add the bindmount for linuxbew to fstab
+      mount:
+        name: /home/linuxbrew
+        src: "/mnt/gvl/apps/linuxbrew"
+        opts: bind
+        fstype: none
+        state: present
+      register: fstab
+      become: yes
+      become_user: root
+
+    - name: Reload fstab
+      command: mount -a
+      #when: fstab.changed
       become: yes
       become_user: root
 

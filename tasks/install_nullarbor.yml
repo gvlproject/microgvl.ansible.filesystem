@@ -37,6 +37,10 @@
 - name: install skewer
   homebrew: name=skewer state=present
   environment: "{{ linuxbrew_env }}"
+  
+- name: Install fasttree with double from source
+  homebrew: name=fasttree install_options=build-from-source,with-double
+  environment: "{{ linuxbrew_env }}"
 
 #Install Roary dependencies
 - name: Install Roary dependencies
@@ -49,19 +53,21 @@
     - parallel
     - prank
     - mafft
-    - exonerate
 
 # TODO: Current spades brew install fails badly. Need to use spades_compile.sh script to compile manaully,
 # then copy files to a new folder in Cellar called spades/3.8.0 (or newer version number) then run brew link spades
 
 #Finally, install nullarbor.
-- name: Install nullarbor
-  homebrew: name=nullarbor state=present
+- name: Install prokka and nullarbor
+  homebrew: name="{{ item }}" state=present install_options=HEAD
   environment: "{{ linuxbrew_env }}"
+  with_items:
+    - prokka
+    - nullarbor
 
 #Now we need to fix it!
 - name: Make the krakendb dir
-  file: dest="{{ gvl_app_path }}"/linuxbrew/Cellar/kraken/krakendb owner=ubuntu state=directory
+  file: dest="{{ homebrew_path }}/Cellar/kraken/krakendb" owner=ubuntu state=directory
   become: yes
   become_user: ubuntu
 
@@ -72,23 +78,15 @@
   become_user: ubuntu
 
 - name: Untar the kraken database
-  unarchive: src="{{ gvl_tmp_path }}/minikraken.tgz" dest="{{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb" copy=no
+  unarchive: src="{{ gvl_tmp_path }}/minikraken.tgz" dest="{{ homebrew_path }}/Cellar/kraken/krakendb" copy=no
   environment: "{{ linuxbrew_env }}"
 
 - name: Move the kraken db
-  shell: "mv {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/minikraken*/* {{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb/"
+  shell: "mv {{ homebrew_path }}/Cellar/kraken/krakendb/minikraken*/* {{ homebrew_path }}/Cellar/kraken/krakendb/"
   become: yes
   become_user: ubuntu
-
-- name: Update the prokka version
-  command: brew reinstall prokka --HEAD
-  environment: "{{ linuxbrew_env }}"
 
 - name: update the perl List::Util version
   command: cpanm --upgrade List::Util
   become: yes
   become_user: root
-
-- name: Reinstall nullarbor to get the head version.
-  command: brew reinstall nullarbor --HEAD
-  environment: "{{ linuxbrew_env }}"

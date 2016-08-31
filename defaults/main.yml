@@ -33,14 +33,17 @@ gvl_tmp_path: "/mnt/gvl/tmp"
 
 microgvl_homebrew_temp: "{{ gvl_tmp_path }}/homebrew_temp"
 microgvl_homebrew_cache: "{{ gvl_tmp_path }}/homebrew_cache"
-homebrew_path: "/home/linuxbrew"
+homebrew_home: "/home/linuxbrew"
+homebrew_path: "{{ homebrew_home }}/.linuxbrew"
+
 
 
 #linuxbrew environment dictionary
 linuxbrew_env:
-    PATH: "{{ homebrew_path }}/.linuxbrew/bin:{{ homebrew_path }}/.linuxbrew/sbin:{{ ansible_env.PATH }}"
-    MANPATH: "{{ homebrew_path }}/.linuxbrew/share/man:{{ ansible_env.MANPATH }}"
-    INFOPATH: "{{ homebrew_path }}/.linuxbrew/share/info"
+    LD_LIBRARY_PATH: ""
+    PATH: "{{ homebrew_path }}/bin:{{ homebrew_path }}/sbin:{{ ansible_env.PATH }}"
+    MANPATH: "{{ homebrew_path }}/share/man"
+    INFOPATH: "{{ homebrew_path }}/share/info"
     HOMEBREW_TEMP: "{{ microgvl_homebrew_temp }}"
     HOMEBREW_CACHE: "{{ microgvl_homebrew_cache }}"
     TEMPDIR: "{{ gvl_tmp_path }}"
