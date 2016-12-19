@@ -37,7 +37,6 @@
         - libncurses-dev
         - zlib1g-dev
         - cpanminus
-        - pandoc
         - oracle-java8-installer
       become: yes
       become_user: root
