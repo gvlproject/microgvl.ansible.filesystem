@@ -16,55 +16,76 @@
     # The following have all been moved to the gvl base image as of version 4.1.
 
 
-    # #Install some extra system packages for microbial tools and linux brew
-    # - name: Update the apt cache
-    #   apt: update_cache=yes
-    #   sudo: yes
-    #   sudo_user: root
-    #
-    # - name: install some system packages
-    #   apt: pkg="{{ item }}" state=latest
-    #   with_items:
-    #     - build-essential
-    #     - curl
-    #     - git
-    #     - m4
-    #     - ruby
-    #     - texinfo
-    #     - libbz2-dev
-    #     - libcurl4-openssl-dev
-    #     - libexpat-dev
-    #     - libncurses-dev
-    #     - zlib1g-dev
-    #     - cpanminus
-    #     - pandoc
-    #     - oracle-java8-installer
-    #   sudo: yes
-    #   sudo_user: root
-    #
+    #Install some extra system packages for microbial tools and linux brew
+    - name: Update the apt cache
+      apt: update_cache=yes
+      become: yes
+      become_user: root
+    
+    - name: install some system packages
+      apt: pkg="{{ item }}" state=latest
+      with_items:
+        - build-essential
+        - curl
+        - git
+        - m4
+        - ruby
+        - texinfo
+        - libbz2-dev
+        - libcurl4-openssl-dev
+        - libexpat-dev
+        - libncurses-dev
+        - zlib1g-dev
+        - cpanminus
+        - oracle-java8-installer
+      become: yes
+      become_user: root
+    
     #Install some extra perl modules for microbial tools
     - name: Install required perl modules
       cpanm: name="{{ item }}" notest=yes
       with_items:
         - Bio::Roary
-      sudo: yes
-      sudo_user: root
+      become: yes
+      become_user: root
     #
     - name: Upgrade List::Util
       command: cpanm --upgrade List::Util
-      sudo: yes
-      sudo_user: root
+      become: yes
+      become_user: root
 
     #Create some temporary directories for linuxbrew incase theiyre not there already
     - name: Create the homebrew_temp directory
       file: dest="/mnt/gvl/tmp/homebrew_temp" state=directory owner=ubuntu group=ubuntu
-      sudo: yes
-      sudo_user: root
+      become: yes
+      become_user: root
 
     - name: Create the homebrew_cache directory
       file: dest="/mnt/gvl/tmp/homebrew_cache" state=directory owner=ubuntu group=ubuntu
-      sudo: yes
-      sudo_user: root
+      become: yes
+      become_user: root
+      
+    - name: Create the homebrew home location in /home
+      file: dest=/home/linuxbrew state=directory owner=ubuntu group=ubuntu
+      become: yes
+      become_user: root
+      
+    - name: Add the bindmount for linuxbew to fstab
+      mount:
+        name: /home/linuxbrew
+        src: "/mnt/gvl/apps/linuxbrew"
+        opts: bind
+        fstype: none
+        state: present
+      register: fstab
+      become: yes
+      become_user: root
+
+    - name: Reload fstab
+      command: mount -a
+      #when: fstab.changed
+      become: yes
+      become_user: root
 
     #Install some extra R libraries
     - name: Add some R packages.
@@ -76,5 +97,8 @@
       with_items:
         - ape
         - nesoni-r
-      sudo: yes
-      sudo_user: root
+        - DESeq2
+        - edgeR
+        - limma
+      become: yes
+      become_user: root

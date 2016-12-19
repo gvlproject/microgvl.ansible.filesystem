@@ -1,6 +1,9 @@
-export PATH="{{ gvl_app_path }}/linuxbrew/bin:{{ gvl_app_path }}/linuxbrew/sbin:$PATH"
-export MANPATH="{{ gvl_app_path }}/linuxbrew/share/man:$MANPATH"
-export INFOPATH="{{ gvl_app_path }}/linuxbrew/share/info:$INFOPATH"
+unset PYTHONPATH
+unset LD_LIBRARY_PATH
+
+export PATH="{{ homebrew_path }}/bin:{{ homebrew_path }}/linuxbrew/sbin:$PATH"
+export MANPATH="{{ homebrew_path }}/share/man:$MANPATH"
+export INFOPATH="{{ homebrew_path }}/share/info:$INFOPATH"
 export HOMEBREW_TEMP="{{ gvl_tmp_path }}/homebrew_temp"
 export HOMEBREW_CACHE="{{ gvl_tmp_path }}/homebrew_cache"
-export KRAKEN_DEFAULT_DB="{{ gvl_app_path }}/linuxbrew/Cellar/kraken/krakendb"
+export KRAKEN_DEFAULT_DB="{{ homebrew_path }}/Cellar/kraken/krakendb"
